@@ -2,10 +2,11 @@
 
 RS=""
 
-export TITLE='Cat Writes'
-export CONTENT='
-<p>Meow mew <a href="blog">blog</a> meow.</p>
-<p>にゃん</p>'
+TITLE="$(cat index-title.txt)"
+export TITLE
+CONTENT="$(cat index-content.html.part)"
+export CONTENT
+
 export ROOT='.'
 export BLOG='blog'
 
@@ -57,7 +58,8 @@ for post in *.md.part; do
   posts="$posts\n$dest$RS$date$RS$TITLE"
 done
 
-export TITLE='Cat Writes a Blog'
+TITLE="$(cat index-title.txt)"
+export TITLE
 CONTENT="$(echo "$posts" | sort -r | awk -F "$RS" 'NF { print("<p><a href=\""$1"\">"$2,$3"</a></p>") }')"
 export CONTENT
 
