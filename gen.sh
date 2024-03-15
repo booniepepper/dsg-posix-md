@@ -37,7 +37,7 @@ find "$sources_root" -type f -name 'page-list*' -delete
     esac
 
     CONTENT="$(pandoc --from commonmark --to html5 "$content")"
-    ROOT="$(realpath --relative-to="$(dirname "$path/$dest")" "$sources_root")"
+    ROOT="$(dirname "$path/$dest" | sed -E 's/\/[^\/]+/\/../g')"
 
     export TITLE
     export CONTENT
@@ -67,7 +67,7 @@ find "$sources_root" -type f -name 'page-list*' -delete
 
     TITLE='Page List'
     CONTENT="<ul>$(sort -r "$list" | awk -F "$RS" 'NF { print("<li><a href=\""$1"\">"$2"</a></li>") }')</ul>"
-    ROOT="$(realpath --relative-to="$path" "$sources_root")"
+    ROOT="$(dirname "$path/$dest" | sed -E 's/\/[^\/]+/\/../g')"
 
     export TITLE
     export CONTENT
